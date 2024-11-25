@@ -1,0 +1,25 @@
+{
+  "name": "fastfoodbackend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joh0/AngularNode.git"
+  },
+  "author": "Joh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Joh0/AngularNode/issues"
+  },
+  "homepage": "https://github.com/Joh0/AngularNode#readme",
+  "description": "",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "mysql": "^2.18.1"
+  }
+}
