@@ -1,1 +1,21 @@
-<p>menu works!</p>
+<table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Calories</th>
+        <th>Delete?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of menuData">
+        <td>{{ data.id }}</td>
+        <td>{{ data.item }}</td>
+        <td>{{ data['price ($)'] }}</td>
+        <td>{{ data['calories (kCal)'] }}</td>
+        <td>Delete!!</td>
+      </tr>
+    </tbody>
+</table>
+  

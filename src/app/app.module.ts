@@ -8,6 +8,8 @@ import { MenuComponent } from './menu/menu.component';
 import { AddComponent } from './add/add.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+
 
 
 
@@ -18,14 +20,15 @@ import { HomeComponent } from './home/home.component';
     MenuComponent,
     AddComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient(withFetch())
   ],
   bootstrap: [AppComponent]
 })
