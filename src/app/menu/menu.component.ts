@@ -28,6 +28,20 @@ export class MenuComponent {
       }
     );
   }
+
+  deleteItem(id: Number){
+    console.log('deleteItem called with ID:', id);
+    alert("Here!");
+    this.myService.deleteItem(id).subscribe(
+      (response: { status: boolean; message: string}) => {
+        alert(response.message);
+        this.getData();
+      },
+      (error) => {
+        alert(error);
+      }
+    );
+  }
 }
 
 

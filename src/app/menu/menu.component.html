@@ -14,7 +14,7 @@
         <td>{{ data.item }}</td>
         <td>{{ data['price ($)'] }}</td>
         <td>{{ data['calories (kCal)'] }}</td>
-        <td>Delete!!</td>
+        <td><button (click)="deleteItem(data.id)">Delete</button></td>
       </tr>
     </tbody>
 </table>

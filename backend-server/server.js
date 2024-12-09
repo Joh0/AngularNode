@@ -44,7 +44,12 @@ app.get('/api/menu', (req, res) => {
 
 // Add item
 app.post("/api/add", (req, res) => {
-    const { item, price, calories } = req.body;
+    const { id, item, price, calories } = {
+        id: req.body.id,
+        item: req.body.item,
+        price: req.body["price ($)"],
+        calories: req.body["calories (kCal)"]
+    };
 
     if (!item || !price || !calories) {
         return res.status(400).send({
@@ -53,8 +58,10 @@ app.post("/api/add", (req, res) => {
         });
     }
 
-    const sql = "INSERT INTO menu_items (item, `price ($)`, `calories (kCal)`) VALUES (?, ?, ?)";
-    const values = [item, price, calories];
+    const sql = "INSERT INTO menu_items (id, item, `price ($)`, `calories (kCal)`) VALUES(?, ?, ?, ?)";
+    const values = [id, item, price, calories];
+
+    console.log("values: " + values);
 
     db.query(sql, values, (err) => {
         if (err) {
@@ -118,10 +125,10 @@ app.delete("/api/delete/:id", (req, res) => {
         if (result.affectedRows === 0) {
             return res.status(404).send({
                 status: false,
-                message: "Item not found.",
+                message: "Item not found."
             });
         }
-        res.status(200).send({ status: true, message: "Item deleted successfully"}); // No content returned on successful deletion
+        res.status(200).send({ status: true, message: "Item " + id + " deleted successfully"}); // No content returned on successful deletion
     })
 })
 

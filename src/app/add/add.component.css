@@ -1,0 +1,36 @@
+h1{
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+
+.form-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh; /* Full height viewport */
+  padding: 20px;
+}
+
+.form-row{
+  display: flex;
+  align-items: center; /* Align label and input vertically */
+  margin-bottom: 10px;
+}
+
+.form-label {
+    margin-right: 10px; /* Space between label and input */
+    font-weight: bold;
+}
+
+.form-input {
+    flex: 1; /* Allows the input to grow if needed */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-button{
+    display: flex;
+    justify-content: right;
+}

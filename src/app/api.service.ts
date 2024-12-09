@@ -17,4 +17,14 @@ export class ApiService {
     return this.http.get<{status: boolean, data: MenuItem[]}>(this.apiUrl + 'menu');
     //return this.http.get<MenuItem[]>(`${this.apiUrl}menu`);
   }
+
+  // Delete
+  deleteItem(id: Number): Observable<{status: boolean, message: string}>{
+    return this.http.delete<{status: boolean, message: string}>(this.apiUrl + 'delete/' + id);
+  }
+
+  // Add
+  addItem(item: MenuItem): Observable<{status: boolean, message: string}>{
+    return this.http.post<{status: boolean, message: string}>(this.apiUrl + 'add', item);
+  }
 }
