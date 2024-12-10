@@ -1,10 +1,12 @@
-<form (ngSubmit)="searchItem(f)" #f="ngForm">
-  <div class="searchBar">
+<div class="searchBar">
+  <form (ngSubmit)="searchItem(f)" #f="ngForm">
     <label for="itemSearch" class="itemLabel">Search for an Item: </label>
     <input type="text" id="itemSearch" class="itemInput" ngModel name="name">
-    <button type="submit" class="btn btn-primary">Search!</button>
-  </div>
-</form>
+    <button type="submit" class="btn btn-primary" style="margin-right: 10px">Search!</button>
+  </form>
+    <button (click)="getData()" class="btn btn-primary">Show all</button>  <!-- Not to be placed within the form or else  getData() will not work-->
+</div>
+
 
 <table>
     <thead>

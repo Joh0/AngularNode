@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ApiService } from '../api.service';
 import { MenuItem } from '../models/menu-item.model';
 import { NgForm } from '@angular/forms';
@@ -12,7 +12,7 @@ export class MenuComponent {
 
   menuData: MenuItem[] = [];
 
-  constructor(private myService: ApiService){
+  constructor(private cdr: ChangeDetectorRef, private myService: ApiService){
   }
 
   ngOnInit(): void {
@@ -23,6 +23,8 @@ export class MenuComponent {
     this.myService.getMenu().subscribe(
       (response: { status: boolean; data: MenuItem[] }) => {
         this.menuData = response.data;
+        console.log(this.menuData);
+        this.cdr.detectChanges();
       },
       (error) => {
         console.error('Error fetching resources:', error);
