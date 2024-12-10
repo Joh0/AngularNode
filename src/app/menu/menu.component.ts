@@ -12,7 +12,7 @@ export class MenuComponent {
 
   menuData: MenuItem[] = [];
 
-  constructor(private cdr: ChangeDetectorRef, private myService: ApiService){
+  constructor(private myService: ApiService){
   }
 
   ngOnInit(): void {
@@ -24,7 +24,6 @@ export class MenuComponent {
       (response: { status: boolean; data: MenuItem[] }) => {
         this.menuData = response.data;
         console.log(this.menuData);
-        this.cdr.detectChanges();
       },
       (error) => {
         console.error('Error fetching resources:', error);
@@ -49,6 +48,7 @@ export class MenuComponent {
   searchItem(form: NgForm){
     var item: string = form.value.name;
     console.log(form.value.name);
+    form.reset();
     this.myService.searchItem(item).subscribe(
       (response: { status: boolean; data: MenuItem[] }) => {
         this.menuData = response.data;
