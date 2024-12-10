@@ -1,3 +1,11 @@
+<form (ngSubmit)="searchItem(f)" #f="ngForm">
+  <div class="searchBar">
+    <label for="itemSearch" class="itemLabel">Search for an Item: </label>
+    <input type="text" id="itemSearch" class="itemInput" ngModel name="name">
+    <button type="submit" class="btn btn-primary">Search!</button>
+  </div>
+</form>
+
 <table>
     <thead>
       <tr>

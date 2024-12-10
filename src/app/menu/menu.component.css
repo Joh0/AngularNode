@@ -14,3 +14,23 @@ table {
     font-weight: bold;
   }
   
+  .searchBar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh; /* Full height viewport */
+    padding: 20px;
+  }
+  
+  .itemLabel {
+      margin-right: 10px; /* Space between label and input */
+      font-weight: bold;
+  }
+  
+  .itemInput {
+      flex: 0.1; /* Allows the input to grow if needed */
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 10px; /* Space between label and input */
+  }

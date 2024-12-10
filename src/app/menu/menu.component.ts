@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../api.service';
 import { MenuItem } from '../models/menu-item.model';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-menu',
@@ -41,6 +42,20 @@ export class MenuComponent {
         alert(error);
       }
     );
+  }
+
+  searchItem(form: NgForm){
+    var item: string = form.value.name;
+    console.log(form.value.name);
+    this.myService.searchItem(item).subscribe(
+      (response: { status: boolean; data: MenuItem[] }) => {
+        this.menuData = response.data;
+        //console.log('Updated menuData:', this.menuData);
+      },
+      (error) => {
+        console.error('Error fetching resources:', error);
+      }
+    )
   }
 }
 

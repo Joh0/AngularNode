@@ -27,4 +27,9 @@ export class ApiService {
   addItem(item: MenuItem): Observable<{status: boolean, message: string}>{
     return this.http.post<{status: boolean, message: string}>(this.apiUrl + 'add', item);
   }
+
+  // Search
+  searchItem(name: string): Observable<{status: boolean, data: MenuItem[]}>{
+    return this.http.get<{status: boolean, data: MenuItem[]}>(this.apiUrl + 'search/' + name);
+  }  
 }
