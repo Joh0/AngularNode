@@ -92,10 +92,19 @@ app.get("/api/search/:item", (req, res) => {
 
 // Update item
 app.put("/api/update/:id", (req, res) => {
-    const { item, price, calories } = req.body;
+    // Very important to take the proper item
+    const { item, price, calories } = {
+        item: req.body.item,
+        price: req.body["price ($)"],
+        calories: req.body["calories (kCal)"]
+    };
     const id = req.params.id;
 
     if (!item || !price || !calories) {
+        console.log("In backend: " + id);
+        console.log("In backend: " + item);
+        console.log("In backend: " + price);
+        console.log("In backend: " + calories);
         return res.status(400).send({
             status: false,
             message: "All fields (item, price, calories) are required!",

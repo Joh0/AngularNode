@@ -1,0 +1,28 @@
+.header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5vh;
+}
+
+
+.form-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh; /* Full height viewport */
+    padding: 20px;
+}
+
+.form-label {
+    margin-right: 10px; /* Space between label and input */
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.form-input {
+    flex: 1; /* Allows the input to grow if needed */
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

@@ -14,6 +14,7 @@ export class AddComponent {
   }
 
   onSubmit(form: NgForm){
+    console.log(form);
     var newItem: MenuItem = {
       id: 0, 
       item: form.value.name, 

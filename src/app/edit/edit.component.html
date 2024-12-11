@@ -1,0 +1,18 @@
+<h1 class="header">Edit your Item</h1>
+<div class="form-container">
+    <form (ngSubmit)="saveItem(f)" #f="ngForm">
+        <label for="id" class="form-label">Id: </label>
+        <input type="number" [(ngModel)]="itemToBeEdited.id" name="id" class="form-input">
+        <br>
+        <label for="name" class="form-label">Name: </label>
+        <input type="text" [(ngModel)]="itemToBeEdited.item" name="name" class="form-input">
+        <br>
+        <label for="price" class="form-label">Price: </label>
+        <input type="number" [(ngModel)]="itemToBeEdited['price ($)']" name="price" class="form-input">
+        <br>
+        <label for="calories" class="form-label">Calories: </label>
+        <input type="number" [(ngModel)]="itemToBeEdited['calories (kCal)']" name="calories" class="form-input">
+        <br>
+        <button type="submit">Save Changes</button>
+    </form>
+</div>

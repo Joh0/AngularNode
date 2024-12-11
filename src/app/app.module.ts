@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { EditComponent } from './edit/edit.component';
 
 
 
@@ -22,6 +23,7 @@ import { FormsModule } from '@angular/forms';
     AddComponent,
     LoginComponent,
     HomeComponent,
+    EditComponent,
   ],
   imports: [
     BrowserModule,

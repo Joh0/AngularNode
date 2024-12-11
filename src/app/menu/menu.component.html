@@ -15,6 +15,7 @@
         <th>Name</th>
         <th>Price</th>
         <th>Calories</th>
+        <th>Edit Item</th>
         <th>Delete?</th>
       </tr>
     </thead>
@@ -24,8 +25,14 @@
         <td>{{ data.item }}</td>
         <td>{{ data['price ($)'] }}</td>
         <td>{{ data['calories (kCal)'] }}</td>
+        <td><button (click)="editItem(data)">Edit</button></td>
         <td><button (click)="deleteItem(data.id)">Delete</button></td>
       </tr>
     </tbody>
 </table>
+<br>
+<br>
+<router-outlet></router-outlet>
+
+
   
