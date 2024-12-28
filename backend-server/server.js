@@ -141,9 +141,112 @@ app.delete("/api/delete/:id", (req, res) => {
     })
 })
 
+// Register user
+
+/* For postman
+{
+    "email": "sally@hotmail.com", 
+    "name": "Beef", 
+    "password": "abc", 
+    "role": "admin"
+}
+*/
+const bcrypt = require('bcrypt');
+
+app.post("/api/register", async(req, res) => {
+    const {email, name, password, role} = req.body;
+   
+    if (!email || !name || !password || !role) {
+        return res.status(400).send({
+            status: false,
+            message: "All fields (email, name, password, role) are required!",
+        });
+    }
+
+    const validRoles = ["admin", "user"];
+    if (!validRoles.includes(role)) {
+    return res.status(400).send({
+        status: false,
+        message: "Invalid role specified!",
+    });
+    }
+
+    /*
+    const saltRounds = 10;
+    var salt;
+    var hashedPassword;
+    
+    bcrypt.genSalt(saltRounds, (err, saltGenerated) => {
+        if (err) {
+            // Handle error
+            return;
+        }
+        // Salt generation successful, proceed to hash the password\
+        salt = saltGenerated;
+        console.log("Salt: " + salt);
+    });
+
+    bcrypt.hash(password, salt, (err, hash) => {
+        if (err) {
+            // Handle error
+            return;
+        }
+        hashedPassword = hash;
+    });
+    */
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const sql = "INSERT INTO users (email, name, password, role) VALUES (?,?,?,?)";
+    const values = [email, name, hashedPassword, role];
+
+    db.query(sql, values, (err) => {
+        if (err) {
+            return res.status(500).send({ status: false, message: "Failed to register user!", error: err.message });
+        }
+        res.status(201).send({ status: true, message: "User registered successfully!" });
+    })
+})
+
+// Login
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
+
+app.post("/api/login", (req, res) => {
+    const {email, password} = {
+        email: req.body.email,
+        password: req.body.password
+    }
+    const sql = "SELECT name, password from users where email = ?";
+
+    db.query(sql, [email], async (err, result) => {
+        if (err) {
+            return res.status(500).send({ status: false, message: "Database error.", error: err.message });
+        }
+        if (result.length === 0) {
+            return res.status(404).send({ status: false, message: "User not found!" });
+        }
+
+        const user = result[0];
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(401).send({ status: false, message: "Invalid password!" });
+        }
+
+        const token = jwt.sign(
+            { name: user.name },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        res.status(200).json({ token });
+    })
+});
+
 
 // Server is running on this port
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-})
+});
