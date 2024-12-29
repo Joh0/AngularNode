@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ApiService } from '../api.service';
 import { User } from '../models/user.model';
 import { error } from 'console';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,10 +12,11 @@ import { error } from 'console';
 })
 export class LoginComponent {
   options = ['Admin', 'User']
-  buttonLabel = 'Register'
-  SwitchLabel = 'Login'
+  buttonLabel = 'Login'
+  SwitchLabel = 'Register'
+  showPassword: boolean = false;
 
-  constructor(private myService: ApiService){}
+  constructor(private myService: ApiService, private router: Router){}
 
   onSubmit(form: NgForm){
     console.log(form.value);
@@ -56,8 +58,10 @@ export class LoginComponent {
   onLogin(userDetails: {email: string, password: string}){
     this.myService.loginUser(userDetails).subscribe(
       (response: string) => {
-        this.saveToken(response);
-        console.log("logging isLoggedIn: " + this.isLoggedIn());
+        this.myService.saveToken(response);
+        alert("Login successful!")
+        console.log("logging isLoggedIn: " + this.myService.isLoggedIn());
+        this.router.navigate(['/home']);
       },
       (error) => {
         alert("Error: " + error.message);
@@ -65,20 +69,8 @@ export class LoginComponent {
     )
   }
 
-  saveToken(token: string): void {
-    localStorage.setItem('token', token);
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
-
-  isLoggedIn(): boolean {
-    return !!this.getToken();
-  }
-
-  logout(): void {
-    localStorage.removeItem('token');
+  togglePasswordVisibility(){
+    this.showPassword = !this.showPassword;
   }
 
 }

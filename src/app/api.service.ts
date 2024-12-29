@@ -70,4 +70,21 @@ export class ApiService {
   loginUser(userDetails: {email: string, password: string}){
     return this.http.post<string>(this.apiUrl + 'login', userDetails);
   }
+
+
+  saveToken(token: string): void {
+    localStorage.setItem('token', token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+  }
 }

@@ -29,6 +29,13 @@
       justify-content: right;
   }
 
+  .button{
+    display: flex;
+    justify-content: right;
+    padding: 5px;
+    margin-left: 10px;
+}
+
   .switch{
     display: flex;
     justify-content: center;

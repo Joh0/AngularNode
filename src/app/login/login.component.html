@@ -2,27 +2,41 @@
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
         <div class="form-row">
             <label for="email" class="form-label">Email</label>
-            <input type="text" id="email" class="form-input" ngModel name="email">
+            <input type="text" id="email" class="form-input" #email="ngModel" ngModel name="email" placeholder="example@hotmail.com" pattern="^[a-zA-Z0-9._%+-]+@[a-z]+\.[a-z]{2,4}$" required>
+            <div *ngIf="email.invalid && email.touched">
+                <small *ngIf="email.errors?.['required']" style="color:red; padding-left: 20px;">Email is required.</small>
+                <small *ngIf="email.errors?.['pattern']" style="color:red; padding-left: 20px;">Invalid email format.</small>
+            </div>
         </div>
         <div class="form-row" *ngIf="buttonLabel==='Register'">
             <label for="name" class="form-label">Name</label>
-            <input type="text" id="name" class="form-input" ngModel name="name">
+            <input type="text" id="name" class="form-input" #name="ngModel" ngModel name="name" placeholder="John" required>
+            <div *ngIf="name.invalid && name.touched">
+                <small *ngIf="name.errors?.['required']" style="color:red; padding-left: 20px;">Name is required.</small>
+            </div>
         </div>
         <div class="form-row">
             <label for="password" class="form-label">Password</label>
-            <input type="text" id="password" class="form-input" ngModel name="password">
+            <input type="{{ showPassword? 'text' : 'password'}}" #password="ngModel" id="password" class="form-input" ngModel name="password" required>
+            <button type="button" class="button" (click) = "togglePasswordVisibility()">Show Password</button>
+            <div *ngIf="password.invalid && password.touched">
+                <small *ngIf="password.errors?.['required']" style="color:red; padding-left: 20px;">Password is required.</small>
+            </div>
         </div>
         <div class="form-row" *ngIf="buttonLabel==='Register'">
             <label for="role" class="form-label">Role</label>
-            <select id="dropdown" ngModel name="role">
+            <select id="dropdown" #role="ngModel" ngModel name="role" required>
                 <option value="" disabled>Select an option</option>
                 <option *ngFor="let option of options" [value]="option">{{option}}</option>
             </select>
+            <div *ngIf="role.invalid && role.touched">
+                <small *ngIf="role.errors?.['required']" style="color:red; padding-left: 20px;">Role is required.</small>
+            </div>
         </div>
         <button type="Submit">{{buttonLabel}}</button>
     </form>
 </div>
 <br><br>
 <div class="switch">
-    <button (click)="onSwitch()">Switch to {{SwitchLabel}}</button>
+    <button class="button" (click)="onSwitch()">Switch to {{SwitchLabel}}</button>
 </div>
