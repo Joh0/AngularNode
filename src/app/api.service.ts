@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MenuItem } from './models/menu-item.model';
+import { User } from './models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -58,5 +59,15 @@ export class ApiService {
   // Function to refresh MenuComponent
   triggerRefresh() {
     this.refreshDataEmitter.next();  // This triggers the refresh
+  }
+
+  // Register User
+  registerUser(user: User): Observable<{status: boolean, message: string}>{
+    return this.http.post<{status: boolean, message: string}>(this.apiUrl + 'register', user);
+  }
+
+  // Login User
+  loginUser(userDetails: {email: string, password: string}){
+    return this.http.post<string>(this.apiUrl + 'login', userDetails);
   }
 }

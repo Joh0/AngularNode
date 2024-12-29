@@ -1,1 +1,28 @@
-<p>login works!</p>
+<div class="form-container">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <div class="form-row">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" id="email" class="form-input" ngModel name="email">
+        </div>
+        <div class="form-row" *ngIf="buttonLabel==='Register'">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" class="form-input" ngModel name="name">
+        </div>
+        <div class="form-row">
+            <label for="password" class="form-label">Password</label>
+            <input type="text" id="password" class="form-input" ngModel name="password">
+        </div>
+        <div class="form-row" *ngIf="buttonLabel==='Register'">
+            <label for="role" class="form-label">Role</label>
+            <select id="dropdown" ngModel name="role">
+                <option value="" disabled>Select an option</option>
+                <option *ngFor="let option of options" [value]="option">{{option}}</option>
+            </select>
+        </div>
+        <button type="Submit">{{buttonLabel}}</button>
+    </form>
+</div>
+<br><br>
+<div class="switch">
+    <button (click)="onSwitch()">Switch to {{SwitchLabel}}</button>
+</div>

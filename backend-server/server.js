@@ -32,9 +32,9 @@ app.get('/api/menu', (req, res) => {
     db.query(sql, (err, result) => {
         if(err){
             console.log("Failure in reading from DB");
-            res.status(500).send({ status: false, message: 'Error reading from DB' });
+            res.status(500).json({ status: false, message: 'Error reading from DB' });
         } else {
-            res.status(200).send({ 
+            res.status(200).json({ 
                 status: true, 
                 data: result,
             });
@@ -52,7 +52,7 @@ app.post("/api/add", (req, res) => {
     };
 
     if (!item || !price || !calories) {
-        return res.status(400).send({
+        return res.status(400).json({
             status: false,
             message: "All fields (item, price, calories) are required!",
         });
@@ -65,9 +65,9 @@ app.post("/api/add", (req, res) => {
 
     db.query(sql, values, (err) => {
         if (err) {
-            return res.status(500).send({ status: false, message: "Failed to add item to the menu!" });
+            return res.status(500).json({ status: false, message: "Failed to add item to the menu!" });
         }
-        res.status(201).send({ status: true, message: "Item added successfully!" });
+        res.status(201).json({ status: true, message: "Item added successfully!" });
     });
 });
 
@@ -79,14 +79,14 @@ app.get("/api/search/:item", (req, res) => {
     db.query(sql, [item], (err, result) => {
         if (err) {
             console.error("Unable to search for item:", err);
-            return res.status(500).send({ status: false, message: "Database error occurred" });
+            return res.status(500).json({ status: false, message: "Database error occurred" });
         }
 
         if (result.length === 0) {
-            return res.status(404).send({ status: false, message: "Item not found" });
+            return res.status(404).json({ status: false, message: "Item not found" });
         }
 
-        res.status(200).send({ status: true, data: result });
+        res.status(200).json({ status: true, data: result });
     });
 });
 
@@ -105,7 +105,7 @@ app.put("/api/update/:id", (req, res) => {
         console.log("In backend: " + item);
         console.log("In backend: " + price);
         console.log("In backend: " + calories);
-        return res.status(400).send({
+        return res.status(400).json({
             status: false,
             message: "All fields (item, price, calories) are required!",
         });
@@ -115,9 +115,9 @@ app.put("/api/update/:id", (req, res) => {
 
     db.query(sql, values, (err) => {
         if (err) {
-            return res.status(500).send({ status: false, message: "Failed to update item to the menu!", error: err.message });
+            return res.status(500).json({ status: false, message: "Failed to update item to the menu!", error: err.message });
         }
-        res.status(200).send({ status: true, message: "Item updated successfully!" });
+        res.status(200).json({ status: true, message: "Item updated successfully!" });
     });
 });
 
@@ -129,15 +129,15 @@ app.delete("/api/delete/:id", (req, res) => {
     const sql = "DELETE FROM menu_items WHERE id = ?";
     db.query(sql, id, (err, result) => {
         if (err) {
-            return res.status(500).send({ status: false, message: "Failed to delete item!", error: err.message });
+            return res.status(500).json({ status: false, message: "Failed to delete item!", error: err.message });
         }
         if (result.affectedRows === 0) {
-            return res.status(404).send({
+            return res.status(404).json({
                 status: false,
                 message: "Item not found."
             });
         }
-        res.status(200).send({ status: true, message: "Item " + id + " deleted successfully"}); // No content returned on successful deletion
+        res.status(200).json({ status: true, message: "Item " + id + " deleted successfully"}); // No content returned on successful deletion
     })
 })
 
@@ -148,7 +148,7 @@ app.delete("/api/delete/:id", (req, res) => {
     "email": "sally@hotmail.com", 
     "name": "Beef", 
     "password": "abc", 
-    "role": "admin"
+    "role": "Admin"
 }
 */
 const bcrypt = require('bcrypt');
@@ -157,15 +157,15 @@ app.post("/api/register", async(req, res) => {
     const {email, name, password, role} = req.body;
    
     if (!email || !name || !password || !role) {
-        return res.status(400).send({
+        return res.status(400).json({
             status: false,
             message: "All fields (email, name, password, role) are required!",
         });
     }
 
-    const validRoles = ["admin", "user"];
+    const validRoles = ["Admin", "User"];
     if (!validRoles.includes(role)) {
-    return res.status(400).send({
+    return res.status(400).json({
         status: false,
         message: "Invalid role specified!",
     });
@@ -202,13 +202,23 @@ app.post("/api/register", async(req, res) => {
 
     db.query(sql, values, (err) => {
         if (err) {
-            return res.status(500).send({ status: false, message: "Failed to register user!", error: err.message });
+            return res.status(500).json({ status: false, message: "Failed to register user!", error: err.message });
         }
-        res.status(201).send({ status: true, message: "User registered successfully!" });
+        res.status(201).json({ status: true, message: "User registered successfully!" });
     })
 })
 
 // Login
+
+/* For postman login
+
+{
+    "email": "sally@hotmail.com", 
+    "password": "abc"
+}
+
+*/
+
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -222,16 +232,16 @@ app.post("/api/login", (req, res) => {
 
     db.query(sql, [email], async (err, result) => {
         if (err) {
-            return res.status(500).send({ status: false, message: "Database error.", error: err.message });
+            return res.status(500).json({ status: false, message: "Database error.", error: err.message });
         }
         if (result.length === 0) {
-            return res.status(404).send({ status: false, message: "User not found!" });
+            return res.status(404).json({ status: false, message: "User not found!" });
         }
 
         const user = result[0];
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(401).send({ status: false, message: "Invalid password!" });
+            return res.status(401).json({ status: false, message: "Invalid password!" });
         }
 
         const token = jwt.sign(

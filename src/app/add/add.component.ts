@@ -27,7 +27,7 @@ export class AddComponent {
         form.reset();
       },
       (error) => {
-        alert("Error: " + error);
+        alert("Error: " + error.message);
       }
     )
   }
