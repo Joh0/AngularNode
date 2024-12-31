@@ -31,13 +31,9 @@ app.get('/api/menu', (req, res) => {
     var sql = "SELECT * FROM menu_items";
     db.query(sql, (err, result) => {
         if(err){
-            console.log("Failure in reading from DB");
             res.status(500).json({ status: false, message: 'Error reading from DB' });
         } else {
-            res.status(200).json({ 
-                status: true, 
-                data: result,
-            });
+            res.status(200).json({ status: true, data: result });
         }
     })
 });
@@ -54,14 +50,14 @@ app.post("/api/add", (req, res) => {
     if (!item || !price || !calories) {
         return res.status(400).json({
             status: false,
-            message: "All fields (item, price, calories) are required!",
+            message: "All fields (item, price, calories) are required!"
         });
     }
 
     const sql = "INSERT INTO menu_items (id, item, `price ($)`, `calories (kCal)`) VALUES(?, ?, ?, ?)";
     const values = [id, item, price, calories];
 
-    console.log("values: " + values);
+    console.log("Values of item to be added: " + values);
 
     db.query(sql, values, (err) => {
         if (err) {
@@ -132,10 +128,7 @@ app.delete("/api/delete/:id", (req, res) => {
             return res.status(500).json({ status: false, message: "Failed to delete item!", error: err.message });
         }
         if (result.affectedRows === 0) {
-            return res.status(404).json({
-                status: false,
-                message: "Item not found."
-            });
+            return res.status(404).json({ status: false, message: "Item not found." });
         }
         res.status(200).json({ status: true, message: "Item " + id + " deleted successfully"}); // No content returned on successful deletion
     })
@@ -157,18 +150,12 @@ app.post("/api/register", async(req, res) => {
     const {email, name, password, role} = req.body;
    
     if (!email || !name || !password || !role) {
-        return res.status(400).json({
-            status: false,
-            message: "All fields (email, name, password, role) are required!",
-        });
+        return res.status(400).json({ status: false, message: "All fields (email, name, password, role) are required!" });
     }
 
     const validRoles = ["Admin", "User"];
     if (!validRoles.includes(role)) {
-    return res.status(400).json({
-        status: false,
-        message: "Invalid role specified!",
-    });
+    return res.status(400).json({ status: false, message: "Invalid role specified!" });
     }
 
     /*
