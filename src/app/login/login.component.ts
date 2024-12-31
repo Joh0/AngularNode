@@ -19,7 +19,6 @@ export class LoginComponent {
   constructor(private myService: ApiService, private router: Router){}
 
   onSubmit(form: NgForm){
-    console.log(form.value);
     if(this.buttonLabel == 'Register'){
       this.onRegister(form.value);
       form.reset();
@@ -44,18 +43,19 @@ export class LoginComponent {
   }
 
   onRegister(user: User){
-    console.log(user);
+    console.log("User to register: " + user);
     this.myService.registerUser(user).subscribe(
       (response: {status: boolean, message: string}) => {
         alert(response.message);
       },
       (error) => {
-        alert("Error: " + error.message);
+        alert("Error in registering: " + error.message);
       }
     )
   }
 
   onLogin(userDetails: {email: string, password: string}){
+    console.log("User to log in: " + userDetails);
     this.myService.loginUser(userDetails).subscribe(
       (response: string) => {
         this.myService.saveToken(response);
@@ -64,7 +64,7 @@ export class LoginComponent {
         this.router.navigate(['/home']);
       },
       (error) => {
-        alert("Error: " + error.message);
+        alert("Error in logging in: " + error.message);
       }
     )
   }

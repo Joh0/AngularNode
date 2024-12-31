@@ -50,7 +50,7 @@ export class ApiService {
   // Sending Item from MenuComponent to here
   pushingItem(item: MenuItem){
     this.itemEmitter.next(item);
-    console.log("In apiservice pushed")
+    console.log("In apiservice, pushed a menu item to item emitter")
     console.log(item.id);
     console.log(item['price ($)']);
     console.log(item['calories (kCal)']);

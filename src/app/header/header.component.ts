@@ -8,14 +8,8 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit, OnDestroy {
-  ngOnDestroy(): void {
-      console.log('HomeComponent destroyed');
-  }
-  ngOnInit(): void {
-    console.log('HomeComponent created');
-  }
-
+export class HeaderComponent {
+  
   constructor(private myService: ApiService, private router: Router){}
 
   logout(){

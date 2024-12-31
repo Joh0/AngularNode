@@ -19,8 +19,10 @@ export class MenuComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-
     this.refreshSubscription = this.myService.refreshDataObservable$.subscribe(() => {
+      // Because this component doesn't get destroyed while EditComponent is created, it needs to have a way to trigger getData() upon saving the edited data.
+      // Saving will trigger a next to refreshDataEmitter. And since MenuComponent is subscribed to the observable of refreshDataEmitter, it will run getData() again.
+      // This reflects any new changes to the menu.
       this.getData();
     }
     );
@@ -82,6 +84,7 @@ export class MenuComponent implements OnInit, OnDestroy{
     console.log(item['calories (kCal)']);
     // Very important to make a copy and push that copy, otherwise the data in menuComponent will adjust as well if you are using ngModel
     var copiedItem = JSON.parse(JSON.stringify(item));
+    // We want to make sure that copiedItem is pushed from menu to apiservice and stored there first, only then navigate to editComponent (hence using the timeout)
     this.myService.pushingItem(copiedItem);
     setTimeout(() => {
       this.router.navigate(['edit'], { relativeTo: this.route });

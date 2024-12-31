@@ -22,6 +22,7 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // At initialisation of editComponent, there is alreeady an item in itemEmitter so subscribing will produce an item. This item is then tagged to itemToBeEdited
     this.myService.itemObservable$.subscribe(
      (item) => {
       if(item){
@@ -32,14 +33,14 @@ export class EditComponent implements OnInit {
         console.log(this.itemToBeEdited['price ($)']);
         console.log(this.itemToBeEdited['calories (kCal)']);
       } else {
-        console.error('No item available! Navigate back or show an error.');
+        console.error('No item available to be edited! Navigate back or show an error.');
       }
      }
     );
   }
 
   saveItem(form: NgForm){
-    console.log(form);
+    console.log("Save Item Form: " + form);
     var id: Number = form.value.id;
     var item: MenuItem = {
       id: form.value.id,
@@ -47,7 +48,7 @@ export class EditComponent implements OnInit {
       'price ($)': form.value.price,
       'calories (kCal)': form.value.calories
     }
-    console.log(item)
+    console.log("Item to be saved: " + item);
     this.myService.editItem(id, item).subscribe(
       (response: { status: boolean, message: string}) => {
         alert(response.message);
@@ -55,7 +56,7 @@ export class EditComponent implements OnInit {
         this.router.navigate(['/menu'], { relativeTo: this.route });
       },
       (error) => {
-        alert("Error: " + error);
+        alert("Error in saving Item: " + error);
       }
     )
   }

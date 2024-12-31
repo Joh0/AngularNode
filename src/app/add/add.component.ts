@@ -14,20 +14,20 @@ export class AddComponent {
   }
 
   onSubmit(form: NgForm){
-    console.log(form);
+    console.log("Add Form: " + form);
     var newItem: MenuItem = {
       id: 0, 
       item: form.value.name, 
       'price ($)': form.value.price, 
       'calories (kCal)': form.value.calories};
-      console.log(newItem);
+    console.log("Menu Item to be added: " + newItem);
     this.myService.addItem(newItem).subscribe(
       (response: { status: boolean; message: string}) => {
         alert(response.message);
         form.reset();
       },
       (error) => {
-        alert("Error: " + error.message);
+        alert("Error in Adding Item: " + error.message);
       }
     )
   }
