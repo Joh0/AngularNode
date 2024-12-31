@@ -1,11 +1,12 @@
 <table>
     <tbody>
         <tr>
-            <th><h1><a routerLink="home">Los Pollos Hermanos</a></h1></th>
-            <th><h3><a routerLink="menu">Menu</a></h3></th>
-            <th><h3><a routerLink="add">Suggest a menu item!</a></h3></th>
-            <th><h3><a routerLink="login">Login/Register</a></h3></th>
+            <th><h1><a routerLink="home" routerLinkActive="active">Los Pollos Hermanos</a></h1></th>
+            <th><h3><a routerLink="menu" routerLinkActive="active">Menu</a></h3></th>
+            <th><h3><a routerLink="add" routerLinkActive="active">Suggest a menu item!</a></h3></th>
+            <th><h3><a routerLink="login" routerLinkActive="active">Login/Register</a></h3></th>
             <th><h3><button (click)="logout()">Log Out</button></h3></th>
+            <th><h3>{{ welcomeMessage }}</h3></th>
         </tr>
     </tbody>
 </table>

@@ -57,8 +57,9 @@ export class LoginComponent {
   onLogin(userDetails: {email: string, password: string}){
     console.log("User to log in: " + userDetails);
     this.myService.loginUser(userDetails).subscribe(
-      (response: string) => {
-        this.myService.saveToken(response);
+      (response) => {
+        this.myService.saveToken(response.token);
+        this.myService.pushingUsername('Welcome ' + response.username + '!');
         alert("Login successful!")
         console.log("logging isLoggedIn: " + this.myService.isLoggedIn());
         this.router.navigate(['/home']);

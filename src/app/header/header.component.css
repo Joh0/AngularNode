@@ -1,5 +1,4 @@
 th, td{
-    border: 1px solid black;
     padding: 3px;
     text-align: center;
 }
@@ -7,3 +6,10 @@ th, td{
 table{
     width: 100%;
 }
+
+.active {
+    color: white;
+    background-color: black;
+    padding: 5%;
+    font-weight: bold;
+  }

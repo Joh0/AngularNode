@@ -11,6 +11,10 @@ export class ApiService {
 
   private apiUrl = 'http://localhost:3000/api/';
 
+  // For sending Username from LoginComponent to HeaderComponent
+  private userNameEmitter = new BehaviorSubject<any>(null);
+  userNameObservable$ = this.userNameEmitter.asObservable();
+
   // For Sending Item from MenuComponent to EditComponent
   private itemEmitter = new BehaviorSubject<any>(null);
   itemObservable$ = this.itemEmitter.asObservable();
@@ -56,6 +60,11 @@ export class ApiService {
     console.log(item['calories (kCal)']);
   }
 
+  // Sending Username from LoginComponent to here
+  pushingUsername(username: string){
+    this.userNameEmitter.next(username);
+  }
+
   // Function to refresh MenuComponent
   triggerRefresh() {
     this.refreshDataEmitter.next();  // This triggers the refresh
@@ -67,10 +76,9 @@ export class ApiService {
   }
 
   // Login User
-  loginUser(userDetails: {email: string, password: string}){
-    return this.http.post<string>(this.apiUrl + 'login', userDetails);
+  loginUser(userDetails: {email: string, password: string}): Observable<{token: string, username: string}>{
+    return this.http.post<{token: string, username: string}>(this.apiUrl + 'login', userDetails);
   }
-
 
   saveToken(token: string): void {
     localStorage.setItem('token', token);
